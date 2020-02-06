@@ -1,1 +1,1 @@
-# typing-tutor-for-blinds
+# Typing-Tutor-For-Blinds
