@@ -1,1 +1,3 @@
 # Typing-Tutor-For-Blinds
+project under development
+coming soon...
