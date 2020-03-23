@@ -281,7 +281,7 @@ void word_exercise()
 			chr = wrd[r][c];
 			chr2 = wrd[r][c+1];
 			ans = getch();
-			while(chr != ans || chr != (ans+32))
+			while(ans != chr)
 			{
 				int pause;
 				if(ans == 27)
@@ -303,11 +303,13 @@ void word_exercise()
 					play_words(r+1);
 					ans = getch();
 				}
+				else if(ans == chr+32)
+					break;
 				else
 				{
 					wclear(disp_win);
 					box(disp_win, 0, 0);
-					mvwprintw(disp_win, 1, 1, "STRING GENERATED:           %s         TRY AGAIN",wrd[r]);
+					mvwprintw(disp_win, 1, 1, "STRING GENERATED:           %s       TRY AGAIN",wrd[r]);
 					//play_words(r+1);
 					wrefresh(disp_win);
 					move(16, 26+(i));
