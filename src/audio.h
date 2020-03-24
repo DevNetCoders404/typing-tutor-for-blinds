@@ -257,4 +257,43 @@ void play_sentences(int i)
             break;
     }
 }
+void play_menus(int i)
+{
+    Mix_Chunk *A = Mix_LoadWAV("audio/menus/alphabet exercise.wav");
+    Mix_Chunk *B = Mix_LoadWAV("audio/menus/word exercise.wav");
+    Mix_Chunk *C = Mix_LoadWAV("audio/menus/sentence-exercise.wav");
+    Mix_Chunk *D = Mix_LoadWAV("audio/menus/Exit.wav");
+    Mix_Chunk *E = Mix_LoadWAV("audio/menus/Pause menu.wav");
+    Mix_Chunk *F = Mix_LoadWAV("audio/menus/Wrong-answer-sound-effect.WAV");
+    switch(i)
+    {
+    case 1:
+            Mix_PlayChannel(-1, A, 0);
+            SDL_Delay(1000);
+            break;
+    case 2:
+            Mix_PlayChannel(-1, B, 0);
+            SDL_Delay(1000);
+            break;
+    case 3:
+            Mix_PlayChannel(-1, C, 0);
+            SDL_Delay(1000);
+            break;
+    case 4:
+            Mix_PlayChannel(-1, D, 0);
+            SDL_Delay(1000);
+            break;
+    case 5:
+            Mix_PlayChannel(-1, E, 0);
+            SDL_Delay(1000);
+            break;
+
+    case 6:
+	    Mix_PlayChannel(-1, F, 0);
+            SDL_Delay(1000);
+            break; 
+    default:
+            break;
+    }
+}
 

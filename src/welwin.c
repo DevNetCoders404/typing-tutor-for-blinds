@@ -68,11 +68,13 @@ int main()
 		
 	menu_win = newwin(HEIGHT, WIDTH, starty, startx);
 	keypad(menu_win, TRUE);
-	mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
-	refresh();
-	print_menu(menu_win, highlight);
+	play_menus(highlight);
 	while(1)
-	{	c = wgetch(menu_win);
+	{
+		mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
+		refresh();
+		print_menu(menu_win, highlight);
+		c = wgetch(menu_win);
 		choice=0;			
 		switch(c)
 		{	case KEY_UP:
@@ -80,16 +82,22 @@ int main()
 					highlight = n_choices;
 				else
 					--highlight;
+				play_menus(highlight);
 				break;
 			case KEY_DOWN:
 				if(highlight == n_choices)
 					highlight = 1;
 				else 
 					++highlight;
+				play_menus(highlight);
 				break;
 			case 10:
 				choice = highlight;
 				break;
+			case 9:
+				play_menus(highlight);
+				break;
+
 			default:
 				refresh();
 				break;
@@ -113,9 +121,6 @@ int main()
 		
 		}
 		clear();
-		mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
-		refresh();
-		print_menu(menu_win, highlight);
 		if(choice == 4)
 			break;
 		
@@ -187,6 +192,7 @@ void alpha_exercise()
 				mvwprintw(disp_win, 7, 24, "PRESS ANY KEY TO START");
 				mvwprintw(disp_win, 8, 21, "PRESS ENTER/ESC TO END EXERCISE");
 				wattroff(disp_win, A_REVERSE);
+				play_menus(5);
 				wrefresh(disp_win);
 				pause = getch();
 				if(pause == 10 || pause == 27)
@@ -202,6 +208,7 @@ void alpha_exercise()
 			else
 			{
 				wclear(disp_win);
+				play_menus(6);
 				box(disp_win, 0, 0);
 				mvwprintw(disp_win, 1, 1, "CHARACTER GENERATED:           %c           TRY AGAIN",chr);
 				play_alphabet(chr);
@@ -229,7 +236,7 @@ void alpha_exercise()
 
 void word_exercise()
 {
-	char wrd[15][10] = {"AFTER ", "ALMOST ", "BECAUSE ", "BETWEEN ", "LATER ", "MIGHT ", "MOTHER ", "NEVER ", "PAPER ", "REALLY ", "RIVER ", "SOMETIMES ", "TOGETHER ", "WATCH ", "WORLD "};
+	char wrd[15][11] = {"AFTER ", "ALMOST ", "BECAUSE ", "BETWEEN ", "LATER ", "MIGHT ", "MOTHER ", "NEVER ", "PAPER ", "REALLY ", "RIVER ", "SOMETIMES ", "TOGETHER ", "WATCH ", "WORLD "};
 	clear();
 	refresh();
 	int i=0,j=1,err=0,r=0,c=0;
@@ -239,7 +246,7 @@ void word_exercise()
 	mvwprintw(disp_win, 1, 26, "** INSTRUCTIONS **");
 	mvwprintw(disp_win, 2, 1, "1. Enter each string displayed or sound produced.");
 	mvwprintw(disp_win, 3, 1, "2. Timer for this exercise is 2 minutes(120 seconds).");
-	mvwprintw(disp_win, 4, 1, "3. If input is wrong, enter string again.");
+	mvwprintw(disp_win, 4, 1, "3. If input is wrong, enter whole string again.");
 	mvwprintw(disp_win, 5, 1, "4. For correct input string, Next string will be generated -");
 	mvwprintw(disp_win, 6, 1, "   until time expires.");
 	wattron(disp_win, A_REVERSE);
@@ -271,13 +278,14 @@ void word_exercise()
 		box(disp_win, 0, 0);
 		wattron(disp_win, A_BOLD);
 		mvwprintw(disp_win, 1, 1, "STRING GENERATED:           %s ",wrd[r]);
-		play_words(r+1);
 		wrefresh(disp_win);
+		play_words(r+1);
 		move(16, 26+(i));
 		c=0;
 		chr2 = wrd[r][c+1];
 		while(chr2 != ' ')
 		{
+			check:
 			chr = wrd[r][c];
 			chr2 = wrd[r][c+1];
 			ans = getch();
@@ -291,6 +299,7 @@ void word_exercise()
 					mvwprintw(disp_win, 7, 24, "PRESS ANY KEY TO START");
 					mvwprintw(disp_win, 8, 21, "PRESS ENTER/ESC TO END EXERCISE");
 					wattroff(disp_win, A_REVERSE);
+					play_menus(5);
 					wrefresh(disp_win);
 					pause = getch();
 					if(pause == 10 || pause == 27)
@@ -310,11 +319,16 @@ void word_exercise()
 					wclear(disp_win);
 					box(disp_win, 0, 0);
 					mvwprintw(disp_win, 1, 1, "STRING GENERATED:           %s       TRY AGAIN",wrd[r]);
-					//play_words(r+1);
+					play_menus(6);
 					wrefresh(disp_win);
+					wclear(input_win);
+					box(input_win, 0, 0);
+					wrefresh(input_win);
 					move(16, 26+(i));
-					ans = getch();
+					refresh();
+					c=0;
 					err++;	
+					goto check;
 				}
 				
 			}
@@ -325,7 +339,7 @@ void word_exercise()
 		wclear(input_win);
 		box(input_win, 0, 0);
 		wrefresh(input_win);
-		move(8, 51);
+		move(16, 26+(i));
 		refresh();
 		i++;
 	}
