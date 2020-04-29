@@ -5,7 +5,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include "audio.h"
-
+#include <string.h>
 #define WIDTH 30
 #define HEIGHT 10 
 
@@ -113,7 +113,7 @@ int main()
 					word_exercise();
 					break;
 				case 3:
-				//	sentence_exercise();
+					sentence_exercise();
 					break;
 				default:
 					break;
@@ -327,6 +327,136 @@ void word_exercise()
 					move(16, 26+(i));
 					refresh();
 					c=0;
+					err++;	
+					goto check;
+				}
+				
+			}
+			mvwprintw(input_win, j, c+1,"%c",ans);
+			wrefresh(input_win);
+			c++;
+		}
+		wclear(input_win);
+		box(input_win, 0, 0);
+		wrefresh(input_win);
+		move(16, 26+(i));
+		refresh();
+		i++;
+	}
+	wclear(disp_win);
+	box(disp_win, 0, 0);
+	wattron(disp_win, A_REVERSE);
+	mvwprintw(disp_win, 1, 1, "EXERCISE COMPLETED...",chr);
+	wattron(disp_win, A_BOLD);
+	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",i,err);
+	wrefresh(disp_win);
+	getch();
+	clear;
+}
+void sentence_exercise()
+{
+	clear();
+	refresh();
+	int i=0,j=1,err=0,r=0,c=0,sp=1;
+	char chr='a',ans,chr2;
+	char sen[5][68] = {"All questions asked by five watched experts amaze the judge$", "The five boxing wizards jump quickly$", "The job requires extra pluck and zeal from every young wage earner$", "The quick brown fox jumps over the lazy dog$", "Woven silk pyjamas exchanged for blue quartz$"}; 
+	WINDOW *disp_win = newwin(10, 70, 1, (80 - 70) / 2);
+	box(disp_win, 0, 0);
+	mvwprintw(disp_win, 1, 26, "** INSTRUCTIONS **");
+	mvwprintw(disp_win, 2, 1, "1. Enter each sentence displayed or sound produced.");
+	mvwprintw(disp_win, 3, 1, "2. Timer for this exercise is 2 minutes(120 seconds).");
+	mvwprintw(disp_win, 4, 1, "3. If input is wrong, enter whole string again.");
+	mvwprintw(disp_win, 5, 1, "4. For correct input sentence, Next will be generated -");
+	mvwprintw(disp_win, 6, 1, "   until time expires.");
+	wattron(disp_win, A_REVERSE);
+	mvwprintw(disp_win, 7, 24, "PRESS ANY KEY TO START");
+	mvwprintw(disp_win, 8, 22, "PRESS ESC TO PREVIOUS MENU");
+	wattroff(disp_win, A_REVERSE);
+	wrefresh(disp_win);
+
+	attron(A_BOLD);
+	mvprintw(13, 31, "[[[ INPUT BOX ]]]");
+	attroff(A_BOLD);
+
+	WINDOW *input_win = newwin(5, 70, 15, (80 - 70) / 2);
+	box(input_win, 0, 0);
+	wrefresh(input_win);
+	move(8, 51);
+	refresh();
+	ans = getch();
+	if(ans == 27)
+	{
+		return;
+	}	
+	while(i!=5)
+	{
+		srand(time(NULL));
+		r = (rand() % (4 - 0 + 1)) + 0;
+		resume:
+		wclear(disp_win);
+		box(disp_win, 0, 0);
+		wattron(disp_win, A_BOLD);
+		mvwprintw(disp_win, 1, 1, "SENTENCE GENERATED:           ");
+		mvwprintw(disp_win, 2, 1, "%s", sen[r]);
+		move(16, 26+(i));
+		wrefresh(disp_win);
+		play_sentences(r+1);
+		c=0;
+		chr2 = sen[r][c+1];
+		sp = 1;
+		while(chr2 != '$')
+		{
+			check:
+			chr = sen[r][c];
+			chr2 = sen[r][c+1];
+			if(chr == 32)
+			sp++;
+			ans = getch();
+			while(ans != chr)
+			{
+				int pause;
+				if(ans == 27)
+				{
+					wattron(disp_win, A_REVERSE);
+					mvwprintw(disp_win, 6, 28, "** PAUSE MENU **");
+					mvwprintw(disp_win, 7, 24, "PRESS ANY KEY TO START",c);
+					mvwprintw(disp_win, 8, 21, "PRESS ENTER/ESC TO END EXERCISE");
+					wattroff(disp_win, A_REVERSE);
+					play_menus(5);
+					wrefresh(disp_win);
+					pause = getch();
+					if(pause == 10 || pause == 27)
+						return;
+					else
+						goto resume;
+				}
+				else if(ans == 10)
+				{
+					play_subsentence(r+1,sp);
+					ans = getch();	
+				} 
+				else if(ans == 9)
+				{
+					play_sentences(r+1);
+					ans = getch();
+				}
+				else if(ans == chr+32)
+					break;
+				else
+				{
+					wclear(disp_win);
+					box(disp_win, 0, 0);
+					mvwprintw(disp_win, 1, 1, "SENTENCE GENERATED:     TRY AGAIN");
+					mvwprintw(disp_win, 2, 1, "%s", sen[r]);					
+					play_menus(6);
+					wrefresh(disp_win);
+					wclear(input_win);
+					box(input_win, 0, 0);
+					wrefresh(input_win);
+					move(16, 26+(1));
+					refresh();
+					c=0;	
+					sp=1;
 					err++;	
 					goto check;
 				}
