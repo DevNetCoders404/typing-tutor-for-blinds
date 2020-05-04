@@ -23,6 +23,7 @@ void print_menu(WINDOW *menu_win, int highlight);
 void alpha_exercise();
 void word_exercise();
 void sentence_exercise();
+void time_converter(int,WINDOW *disp_win);
 
 int main()
 {	WINDOW *menu_win;
@@ -169,6 +170,9 @@ void alpha_exercise()
 	{
 		return;
 	}	
+
+	time_t begin = time(NULL);
+
 	while(i!=10)
 	{
 		srand(time(NULL));
@@ -223,12 +227,16 @@ void alpha_exercise()
 		wrefresh(input_win);
 		i++;
 	}
+
+	time_t end = time(NULL);
 	wclear(disp_win);
 	box(disp_win, 0, 0);
 	wattron(disp_win, A_REVERSE);
 	mvwprintw(disp_win, 1, 1, "EXERCISE COMPLETED...",chr);
 	wattron(disp_win, A_BOLD);
 	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",i,err);
+	int sec = end - begin;
+	time_converter(sec,disp_win);
 	wrefresh(disp_win);
 	getch();
 	clear;
@@ -269,6 +277,9 @@ void word_exercise()
 	{
 		return;
 	}	
+
+	time_t begin = time(NULL);
+
 	while(i!=10)
 	{
 		srand(time(NULL));
@@ -343,12 +354,16 @@ void word_exercise()
 		refresh();
 		i++;
 	}
+
+	time_t end = time(NULL);
 	wclear(disp_win);
 	box(disp_win, 0, 0);
 	wattron(disp_win, A_REVERSE);
 	mvwprintw(disp_win, 1, 1, "EXERCISE COMPLETED...",chr);
 	wattron(disp_win, A_BOLD);
 	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",i,err);
+	int sec = end - begin;
+	time_converter(sec,disp_win);
 	wrefresh(disp_win);
 	getch();
 	clear;
@@ -388,6 +403,9 @@ void sentence_exercise()
 	{
 		return;
 	}	
+
+	time_t begin = time(NULL);
+
 	while(i!=5)
 	{
 		srand(time(NULL));
@@ -473,12 +491,16 @@ void sentence_exercise()
 		refresh();
 		i++;
 	}
+
+	time_t end = time(NULL);
 	wclear(disp_win);
 	box(disp_win, 0, 0);
 	wattron(disp_win, A_REVERSE);
 	mvwprintw(disp_win, 1, 1, "EXERCISE COMPLETED...",chr);
 	wattron(disp_win, A_BOLD);
 	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",i,err);
+	int sec = end - begin;
+	time_converter(sec,disp_win);
 	wrefresh(disp_win);
 	getch();
 	clear;
@@ -507,3 +529,14 @@ void print_menu(WINDOW *menu_win, int highlight)
 	wrefresh(menu_win);
 }
 
+void time_converter(int sec,WINDOW *disp_win) {
+
+//        box(disp_win, 0, 0);
+
+        int hour,min;
+        hour = (sec / 3600);
+        min = (sec - (3600 * hour)) / 60;
+        sec = (sec - (3600 * hour) - (min * 60));
+
+	mvwprintw(disp_win, 3, 1, "Time elpased is %dH:%dM:%dS",hour,min,sec);
+}
