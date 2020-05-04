@@ -140,6 +140,7 @@ void alpha_exercise()
 {
 	clear();
 	refresh();
+	static int ptime;
 	int i=0,j=1,err=0;
 	char chr,ans;
 	WINDOW *disp_win = newwin(10, 70, 1, (80 - 70) / 2);
@@ -192,6 +193,7 @@ void alpha_exercise()
 			if(ans == 27)
 			{
 				wattron(disp_win, A_REVERSE);
+				time_t ps_time = time(NULL);
 				mvwprintw(disp_win, 6, 28, "** PAUSE MENU **");
 				mvwprintw(disp_win, 7, 24, "PRESS ANY KEY TO START");
 				mvwprintw(disp_win, 8, 21, "PRESS ENTER/ESC TO END EXERCISE");
@@ -202,7 +204,11 @@ void alpha_exercise()
 				if(pause == 10 || pause == 27)
 					return;
 				else
+				{	
+					time_t pe_time = time(NULL);
+					ptime = pe_time - ps_time;				
 					goto resume;
+				}
 			}
 			else if(ans == 9)
 			{
@@ -236,6 +242,7 @@ void alpha_exercise()
 	wattron(disp_win, A_BOLD);
 	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",i,err);
 	int sec = end - begin;
+	sec -= ptime;
 	time_converter(sec,disp_win);
 	wrefresh(disp_win);
 	getch();
@@ -247,6 +254,7 @@ void word_exercise()
 	char wrd[15][11] = {"AFTER ", "ALMOST ", "BECAUSE ", "BETWEEN ", "LATER ", "MIGHT ", "MOTHER ", "NEVER ", "PAPER ", "REALLY ", "RIVER ", "SOMETIMES ", "TOGETHER ", "WATCH ", "WORLD "};
 	clear();
 	refresh();
+	static int ptime;
 	int i=0,j=1,err=0,r=0,c=0;
 	char chr='a',ans,chr2;
 	WINDOW *disp_win = newwin(10, 70, 1, (80 - 70) / 2);
@@ -306,6 +314,7 @@ void word_exercise()
 				if(ans == 27)
 				{
 					wattron(disp_win, A_REVERSE);
+					time_t ps_time = time(NULL);
 					mvwprintw(disp_win, 6, 28, "** PAUSE MENU **");
 					mvwprintw(disp_win, 7, 24, "PRESS ANY KEY TO START");
 					mvwprintw(disp_win, 8, 21, "PRESS ENTER/ESC TO END EXERCISE");
@@ -316,7 +325,11 @@ void word_exercise()
 					if(pause == 10 || pause == 27)
 						return;
 					else
+					{
+						time_t pe_time = time(NULL);
+						ptime = pe_time - ps_time;
 						goto resume;
+					}
 				}
 				else if(ans == 9)
 				{
@@ -363,6 +376,7 @@ void word_exercise()
 	wattron(disp_win, A_BOLD);
 	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",i,err);
 	int sec = end - begin;
+	sec -= ptime;
 	time_converter(sec,disp_win);
 	wrefresh(disp_win);
 	getch();
@@ -372,6 +386,7 @@ void sentence_exercise()
 {
 	clear();
 	refresh();
+	static int ptime;
 	int i=0,j=1,err=0,r=0,c=0,sp=1;
 	char chr='a',ans,chr2;
 	char sen[5][68] = {"All questions asked by five watched experts amaze the judge$", "The five boxing wizards jump quickly$", "The job requires extra pluck and zeal from every young wage earner$", "The quick brown fox jumps over the lazy dog$", "Woven silk pyjamas exchanged for blue quartz$"}; 
@@ -436,6 +451,7 @@ void sentence_exercise()
 				if(ans == 27)
 				{
 					wattron(disp_win, A_REVERSE);
+					time_t ps_time = time(NULL);
 					mvwprintw(disp_win, 6, 28, "** PAUSE MENU **");
 					mvwprintw(disp_win, 7, 24, "PRESS ANY KEY TO START",c);
 					mvwprintw(disp_win, 8, 21, "PRESS ENTER/ESC TO END EXERCISE");
@@ -446,7 +462,11 @@ void sentence_exercise()
 					if(pause == 10 || pause == 27)
 						return;
 					else
+					{
+						time_t pe_time = time(NULL);
+						ptime = pe_time - ps_time;
 						goto resume;
+					}
 				}
 				else if(ans == 10)
 				{
@@ -500,6 +520,7 @@ void sentence_exercise()
 	wattron(disp_win, A_BOLD);
 	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",i,err);
 	int sec = end - begin;
+	sec -= ptime;
 	time_converter(sec,disp_win);
 	wrefresh(disp_win);
 	getch();
