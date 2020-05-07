@@ -151,7 +151,7 @@ void alpha_exercise()
 	box(disp_win, 0, 0);
 	mvwprintw(disp_win, 1, 26, "** INSTRUCTIONS **");
 	mvwprintw(disp_win, 2, 1, "1. Enter each character displayed or sound produced.");
-	mvwprintw(disp_win, 3, 1, "2. Timer for this exercise is 2 minutes(120 seconds).");
+	mvwprintw(disp_win, 3, 1, "2. Timer for this exercise is 30 seconds.");
 	mvwprintw(disp_win, 4, 1, "3. If input is wrong, enter character again.");
 	mvwprintw(disp_win, 5, 1, "4. For correct input character, Next character will be generated -");
 	mvwprintw(disp_win, 6, 1, "   until time expires.");
