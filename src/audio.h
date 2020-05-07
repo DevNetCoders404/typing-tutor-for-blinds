@@ -291,14 +291,14 @@ void play_menus(int i)
     case 6:
 	    Mix_PlayChannel(-1, F, 0);
             SDL_Delay(1000);
-            break; 
+            break;
     default:
             break;
     }
 }
 void play_subsentence(int i, int j)
 {
-		
+
 	Mix_Chunk *A1 = Mix_LoadWAV("audio/sentences/1st Sentence/All.wav");
     	Mix_Chunk *B1 = Mix_LoadWAV("audio/sentences/1st Sentence/Questions.wav");
 	Mix_Chunk *C1 = Mix_LoadWAV("audio/sentences/1st Sentence/Asked.wav");
@@ -309,14 +309,14 @@ void play_subsentence(int i, int j)
     	Mix_Chunk *H1 = Mix_LoadWAV("audio/sentences/1st Sentence/Amaze.wav");
     	Mix_Chunk *I1 = Mix_LoadWAV("audio/sentences/1st Sentence/The.wav");
 	Mix_Chunk *J1 = Mix_LoadWAV("audio/sentences/1st Sentence/Judge.wav");
-	
+
 	Mix_Chunk *A2 = Mix_LoadWAV("audio/sentences/2nd Sentence/The.wav");
     	Mix_Chunk *B2 = Mix_LoadWAV("audio/sentences/2nd Sentence/Five.wav");
     	Mix_Chunk *C2 = Mix_LoadWAV("audio/sentences/2nd Sentence/Boxing.wav");
     	Mix_Chunk *D2 = Mix_LoadWAV("audio/sentences/2nd Sentence/Wizards.wav");
     	Mix_Chunk *E2 = Mix_LoadWAV("audio/sentences/2nd Sentence/Jump.wav");
     	Mix_Chunk *F2 = Mix_LoadWAV("audio/sentences/2nd Sentence/Quickly.wav");
-	
+
 	Mix_Chunk *A3 = Mix_LoadWAV("audio/sentences/3rd Sentence/The.wav");
    	Mix_Chunk *B3 = Mix_LoadWAV("audio/sentences/3rd Sentence/Job.wav");
     	Mix_Chunk *C3 = Mix_LoadWAV("audio/sentences/3rd Sentence/Requires.wav");
@@ -329,7 +329,7 @@ void play_subsentence(int i, int j)
     	Mix_Chunk *J3 = Mix_LoadWAV("audio/sentences/3rd Sentence/Young.wav");
     	Mix_Chunk *K3 = Mix_LoadWAV("audio/sentences/3rd Sentence/Wage.wav");
     	Mix_Chunk *L3 = Mix_LoadWAV("audio/sentences/3rd Sentence/Earnerl.wav");
-	
+
 	Mix_Chunk *A4 = Mix_LoadWAV("audio/sentences/4th Sentence/The.wav");
 	Mix_Chunk *B4 = Mix_LoadWAV("audio/sentences/4th Sentence/Quick.wav");
 	Mix_Chunk *C4 = Mix_LoadWAV("audio/sentences/4th Sentence/Brown.wav");
@@ -339,7 +339,7 @@ void play_subsentence(int i, int j)
 	Mix_Chunk *G4 = Mix_LoadWAV("audio/sentences/4th Sentence/The.wav");
 	Mix_Chunk *H4 = Mix_LoadWAV("audio/sentences/4th Sentence/Lazy .wav");
 	Mix_Chunk *I4 = Mix_LoadWAV("audio/sentences/4th Sentence/Dog.wav");
-	
+
 	Mix_Chunk *A5 = Mix_LoadWAV("audio/sentences/5th Sentence/Woven.wav");
 	Mix_Chunk *B5 = Mix_LoadWAV("audio/sentences/5th Sentence/Silk.wav");
 	Mix_Chunk *C5 = Mix_LoadWAV("audio/sentences/5th Sentence/Pyjamas.wav");
@@ -347,12 +347,12 @@ void play_subsentence(int i, int j)
 	Mix_Chunk *E5 = Mix_LoadWAV("audio/sentences/5th Sentence/For.wav");
 	Mix_Chunk *F5 = Mix_LoadWAV("audio/sentences/5th Sentence/Blue.wav");
 	Mix_Chunk *G5 = Mix_LoadWAV("audio/sentences/5th Sentence/Quartz.wav");
-	
+
 
     switch(i)
     {
           case 1:
-		
+
 		switch(j)
 		    {
 		    case 1:
@@ -401,7 +401,7 @@ void play_subsentence(int i, int j)
 		break;
 
 	case 2:
-		
+
 		switch(j)
 		    {
 		    case 1:
@@ -537,7 +537,7 @@ void play_subsentence(int i, int j)
 		    }
 		break;
 	case 5:
-	   
+
 		switch(i)
 		    {
 		    case 1:
@@ -571,7 +571,33 @@ void play_subsentence(int i, int j)
 		    default:
 			    break;
 		    }
-		break;	
+		break;
 	}
-		
+
+}
+void cal_app(int i)
+{
+    Mix_Chunk *A = Mix_LoadWAV("audio/Excellent.wav");
+    Mix_Chunk *B = Mix_LoadWAV("audio/Very Good.wav");
+    Mix_Chunk *C = Mix_LoadWAV("audio/Good.wav");
+    Mix_Chunk *D = Mix_LoadWAV("audio/Poor...Need Practice.wav");
+    switch(i)
+    {
+        case 0:
+                Mix_PlayChannel(-1, A, 0);
+                SDL_Delay(1000);
+                break;
+        case 1 ... 2:
+                Mix_PlayChannel(-1, B, 0);
+                SDL_Delay(1000);
+                break;
+        case 3 ... 4:
+                Mix_PlayChannel(-1, C, 0);
+                SDL_Delay(1000);
+                break;
+        case 5 ... 50:
+                Mix_PlayChannel(-1, D, 0);
+                SDL_Delay(2000);
+                break;
+    }
 }
