@@ -178,7 +178,7 @@ void alpha_exercise()
 
 	time_t begin = time(NULL);
 
-	while(i!=10)
+	while(i!=50)
 	{
 		time_t end = time(NULL);
 		int sec = end - begin;
@@ -256,6 +256,37 @@ void alpha_exercise()
 	sec -= ptime;
 	struct format_time s = time_converter(sec,disp_win);
 	mvwprintw(disp_win, 3, 1, "Time elpased is %dH:%dM:%dS",s.hour,s.min,s.sec);
+	switch(err)
+	{
+		case 0:
+			mvwprintw(disp_win, 4, 1, "Grade: Excellent...");
+		        break;
+		case 1 ... 2:
+		        mvwprintw(disp_win, 4, 1, "Grade: Very Good...");
+		        break;
+		case 3 ... 4:
+		        mvwprintw(disp_win, 4, 1, "Grade: Good...");
+		        break;
+		case 5 ... 50:
+		        mvwprintw(disp_win, 4, 1, "Grade: Poor... Need Improvement...");
+		        break;
+	}
+	switch(i)
+	{
+		case 12 ... 50:
+			mvwprintw(disp_win, 5, 1, "Speed: Excellent...");
+		        break;
+		case 7 ... 11:
+		        mvwprintw(disp_win, 5, 1, "Speed: Very Good...");
+		        break;
+		case 5 ... 6:
+		        mvwprintw(disp_win, 5, 1, "Speed: Good...");
+		        break;
+		case 0 ... 4:
+		        mvwprintw(disp_win, 5, 1, "Speed: Poor... Need Improvement...");
+		        break;
+	}
+	cal_app(err);
 	wrefresh(disp_win);
 	getch();
 	clear;
@@ -300,7 +331,7 @@ void word_exercise()
 
 	time_t begin = time(NULL);
 
-	while(i!=10)
+	while(i!=50)
 	{
 		time_t end = time(NULL);
 		int sec = end - begin;
@@ -397,6 +428,37 @@ void word_exercise()
 	sec -= ptime;
 	struct format_time s = time_converter(sec,disp_win);
 	mvwprintw(disp_win, 3, 1, "Time elpased is %dH:%dM:%dS",s.hour,s.min,s.sec);
+	switch(err)
+	{
+		case 0:
+			mvwprintw(disp_win, 4, 1, "Grade: Excellent...");
+		        break;
+		case 1 ... 2:
+		        mvwprintw(disp_win, 4, 1, "Grade: Very Good...");
+		        break;
+		case 3 ... 4:
+		        mvwprintw(disp_win, 4, 1, "Grade: Good...");
+		        break;
+		case 5 ... 50:
+		        mvwprintw(disp_win, 4, 1, "Grade: Poor... Need Improvement...");
+		        break;
+	}
+	switch(i)
+	{
+		case 15 ... 50:
+			mvwprintw(disp_win, 5, 1, "Speed: Excellent...");
+		        break;
+		case 11 ... 14:
+		        mvwprintw(disp_win, 5, 1, "Speed: Very Good...");
+		        break;
+		case 8 ... 10:
+		        mvwprintw(disp_win, 5, 1, "Speed: Good...");
+		        break;
+		case 0 ... 7:
+		        mvwprintw(disp_win, 5, 1, "Speed: Poor... Need Improvement...");
+		        break;
+	}
+	cal_app(err);	
 	wrefresh(disp_win);
 	getch();
 	clear;
@@ -440,7 +502,7 @@ void sentence_exercise()
 
 	time_t begin = time(NULL);
 
-	while(i!=5)
+	while(i!=20)
 	{
 		time_t end = time(NULL);
 		int sec = end - begin;
@@ -548,6 +610,37 @@ void sentence_exercise()
 	sec -= ptime;
 	struct format_time s = time_converter(sec,disp_win);
 	mvwprintw(disp_win, 3, 1, "Time elpased is %dH:%dM:%dS",s.hour,s.min,s.sec);
+	switch(err)
+	{
+		case 0:
+			mvwprintw(disp_win, 4, 1, "Grade: Excellent...");
+		        break;
+		case 1 ... 2:
+		        mvwprintw(disp_win, 4, 1, "Grade: Very Good...");
+		        break;
+		case 3 ... 4:
+		        mvwprintw(disp_win, 4, 1, "Grade: Good...");
+		        break;
+		case 5 ... 50:
+		        mvwprintw(disp_win, 4, 1, "Grade: Poor... Need Improvement...");
+		        break;
+	}
+	switch(i)
+	{
+		case 5 ... 20:
+			mvwprintw(disp_win, 5, 1, "Speed: Excellent...");
+		        break;
+		case 3 ... 4:
+		        mvwprintw(disp_win, 5, 1, "Speed: Very Good...");
+		        break;
+		case 2:
+		        mvwprintw(disp_win, 5, 1, "Speed: Good...");
+		        break;
+		case 0 ... 1:
+		        mvwprintw(disp_win, 5, 1, "Speed: Poor... Need Improvement...");
+		        break;
+	}
+	cal_app(err);
 	wrefresh(disp_win);
 	getch();
 	clear;
