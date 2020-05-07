@@ -244,13 +244,18 @@ void alpha_exercise()
 		i++;
 	}
 
+	
+	time_t end = time(NULL);
 	wclear(disp_win);
 	box(disp_win, 0, 0);
 	wattron(disp_win, A_REVERSE);
 	mvwprintw(disp_win, 1, 1, "EXERCISE COMPLETED...",chr);
 	wattron(disp_win, A_BOLD);
 	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",(i-err),err);
-	//mvwprintw(disp_win, 3, 1, "Time elpased is %dH:%dM:%dS",s.hour,s.min,s.sec);
+	int sec = end - begin;
+	sec -= ptime;
+	struct format_time s = time_converter(sec,disp_win);
+	mvwprintw(disp_win, 3, 1, "Time elpased is %dH:%dM:%dS",s.hour,s.min,s.sec);
 	wrefresh(disp_win);
 	getch();
 	clear;
