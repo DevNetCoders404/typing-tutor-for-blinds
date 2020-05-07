@@ -18,12 +18,16 @@ char *choices[] = {
 			"3. Sentence Exercise",
 			"4. Exit",
 		  };
+struct format_time
+{
+       	int hour,min,sec;
+};
 int n_choices = sizeof(choices) / sizeof(char *);
 void print_menu(WINDOW *menu_win, int highlight);
 void alpha_exercise();
 void word_exercise();
 void sentence_exercise();
-void time_converter(int,WINDOW *disp_win);
+struct format_time time_converter(int,WINDOW *disp_win);
 
 int main()
 {	WINDOW *menu_win;
@@ -176,6 +180,12 @@ void alpha_exercise()
 
 	while(i!=10)
 	{
+		time_t end = time(NULL);
+		int sec = end - begin;
+		sec -= ptime;
+		struct format_time s = time_converter(sec,disp_win);
+		if(s.sec >= 30)
+			break;
 		srand(time(NULL));
 		chr = (rand() % (122 - 97 + 1)) + 97;
 		resume:
@@ -234,16 +244,13 @@ void alpha_exercise()
 		i++;
 	}
 
-	time_t end = time(NULL);
 	wclear(disp_win);
 	box(disp_win, 0, 0);
 	wattron(disp_win, A_REVERSE);
 	mvwprintw(disp_win, 1, 1, "EXERCISE COMPLETED...",chr);
 	wattron(disp_win, A_BOLD);
-	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",i,err);
-	int sec = end - begin;
-	sec -= ptime;
-	time_converter(sec,disp_win);
+	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",(i-err),err);
+	//mvwprintw(disp_win, 3, 1, "Time elpased is %dH:%dM:%dS",s.hour,s.min,s.sec);
 	wrefresh(disp_win);
 	getch();
 	clear;
@@ -290,6 +297,12 @@ void word_exercise()
 
 	while(i!=10)
 	{
+		time_t end = time(NULL);
+		int sec = end - begin;
+		sec -= ptime;
+		struct format_time s = time_converter(sec,disp_win);
+		if(s.min >= 2)
+			break;
 		srand(time(NULL));
 		r = (rand() % (14 - 0 + 1)) + 0;
 		resume:
@@ -374,10 +387,11 @@ void word_exercise()
 	wattron(disp_win, A_REVERSE);
 	mvwprintw(disp_win, 1, 1, "EXERCISE COMPLETED...",chr);
 	wattron(disp_win, A_BOLD);
-	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",i,err);
+	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",(i-err),err);
 	int sec = end - begin;
 	sec -= ptime;
-	time_converter(sec,disp_win);
+	struct format_time s = time_converter(sec,disp_win);
+	mvwprintw(disp_win, 3, 1, "Time elpased is %dH:%dM:%dS",s.hour,s.min,s.sec);
 	wrefresh(disp_win);
 	getch();
 	clear;
@@ -423,6 +437,12 @@ void sentence_exercise()
 
 	while(i!=5)
 	{
+		time_t end = time(NULL);
+		int sec = end - begin;
+		sec -= ptime;
+		struct format_time s = time_converter(sec,disp_win);
+		if(s.min >= 2)
+			break;
 		srand(time(NULL));
 		r = (rand() % (4 - 0 + 1)) + 0;
 		resume:
@@ -518,10 +538,11 @@ void sentence_exercise()
 	wattron(disp_win, A_REVERSE);
 	mvwprintw(disp_win, 1, 1, "EXERCISE COMPLETED...",chr);
 	wattron(disp_win, A_BOLD);
-	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",i,err);
+	mvwprintw(disp_win, 2, 1, "FINAL SCORE: CORRECT-%d WRONG-%d",(i-err),err);
 	int sec = end - begin;
 	sec -= ptime;
-	time_converter(sec,disp_win);
+	struct format_time s = time_converter(sec,disp_win);
+	mvwprintw(disp_win, 3, 1, "Time elpased is %dH:%dM:%dS",s.hour,s.min,s.sec);
 	wrefresh(disp_win);
 	getch();
 	clear;
@@ -550,14 +571,16 @@ void print_menu(WINDOW *menu_win, int highlight)
 	wrefresh(menu_win);
 }
 
-void time_converter(int sec,WINDOW *disp_win) {
+struct format_time time_converter(int second,WINDOW *disp_win) 
+{
 
 //        box(disp_win, 0, 0);
+	struct format_time s;
+        s.hour = (second / 3600);
+        s.min = (second - (3600 * s.hour)) / 60;
+        s.sec = (second - (3600 * s.hour) - (s.min * 60));
 
-        int hour,min;
-        hour = (sec / 3600);
-        min = (sec - (3600 * hour)) / 60;
-        sec = (sec - (3600 * hour) - (min * 60));
+	return s;
 
-	mvwprintw(disp_win, 3, 1, "Time elpased is %dH:%dM:%dS",hour,min,sec);
 }
+
